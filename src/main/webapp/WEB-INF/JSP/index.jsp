@@ -24,6 +24,11 @@
 <body>
 	<h1>Pizza Luigi</h1>
 	<img src='images/pizza.jpg' alt='pizza' class='fulwidth'>
-	<h2>Goede dag</h2>
+	<!-- 
+	  In een JSP lees je data die de controller doorgaf met een miniprogrammeertaal: 
+	  EL (Expression Language). Elke EL expressie begint met $ gevolgd door { en eindigt op }.
+	  Je leest de inhoud van de data met de naam boodschap met ${boodschap}
+	-->
+	<h2>${boodschap}</h2>
 </body>
 </html>
