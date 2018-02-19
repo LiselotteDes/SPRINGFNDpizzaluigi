@@ -1,0 +1,118 @@
+body {
+	background-color: #FFFFDE;
+	color: #5A0000;
+	font-family: sans-serif;
+}
+
+.fullwidth {
+	width: 100%;
+}
+
+dd,dt {
+	margin-left: 0;
+}
+
+dt {
+	margin-top: 0.5em;
+}
+
+dd {
+	font-weight: bold;
+}
+
+label span, .fout {
+	background-color: red;
+	border-bottom-right-radius: 0.5em;
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+	box-shadow: 5px 5px #777777;
+	margin-left: 0.5em;
+	padding: 0.5em;
+	color: white;
+}
+
+label span:empty, .fout:empty {
+	display: none;
+}
+
+.boodschap {
+	background-color: green;
+	border-bottom-right-radius: 0.5em;
+	border-top-left-radius: 0.5em;
+	border-top-right-radius: 0.5em;
+	box-shadow: 5px 5px #777777;
+	margin-left: 0.5em;
+	padding: 0.5em;
+	color: white;
+}
+
+label span {
+	margin-left: 0.5em;
+}
+
+label {
+	cursor: pointer;
+}
+
+input {
+	display: block;
+	margin-top: 0.2em;
+	margin-bottom: 1em;
+	font-size: 1.1em;
+}
+
+input:focus,textarea:focus,select:focus {
+	background-color: #FFFFD6
+}
+
+.zonderbolletjes {
+	list-style: none;
+}
+
+input[type='checkbox'] {
+	display: inline;
+}
+
+nav ul {
+	background-color: red;
+	padding: 0.4em 0;
+}
+
+nav li {
+	display: inline;
+}
+
+nav li a {
+	color: white;
+	font-weight: bold;
+	padding-left: 0.5em;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+nav li a:hover {
+	color: #F7FFCC;
+}
+
+ul.zebra {
+	list-style: none;
+	padding: 0;
+}
+
+ul.zebra li {
+	padding-left: 0.5em;
+	padding-bottom: 0.1em;
+	padding-top: 0.1em;
+}
+
+ul.zebra li:nth-child(odd) {
+	background-color: #F2F2E4;
+}
+
+ul.zebra li:nth-child(even) {
+	background-color: #E6E6C8;
+}
+
+ul.zebra li:nth-child(odd):hover, ul.zebra li:nth-child(even):hover {
+	background-color: #ccff00;
+}
