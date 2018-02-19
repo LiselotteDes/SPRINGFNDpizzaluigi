@@ -69,6 +69,11 @@ class IndexController {
 		 * De 2° parameter is de naam waaronder de controller data doorgeeft.
 		 * De 3° parameter is de data zelf.
 		 */
-		return new ModelAndView("/WEB-INF/JSP/index.jsp", "boodschap", boodschap);
+//		return new ModelAndView("/WEB-INF/JSP/index.jsp", "boodschap", boodschap);
+		/*
+		 *  nadat in application.properties de plaats en de extensie van de JSP's 
+		 *  zijn opgegeven als prefix en suffix:
+		 */
+		return new ModelAndView("index", "boodschap", boodschap);
 	}
 }
