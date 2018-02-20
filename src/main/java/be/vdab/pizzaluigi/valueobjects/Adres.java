@@ -3,11 +3,11 @@ package be.vdab.pizzaluigi.valueobjects;
 public class Adres {
 	private String straat;
 	private String huisNr;
-	private String postcode;
+	private int postcode;
 	private String gemeente;
 	public Adres() {
 	}
-	public Adres(String straat, String huisNr, String postcode, String gemeente) {
+	public Adres(String straat, String huisNr, int postcode, String gemeente) {
 		this.straat = straat;
 		this.huisNr = huisNr;
 		this.postcode = postcode;
@@ -19,7 +19,7 @@ public class Adres {
 	public String getHuisNr() {
 		return huisNr;
 	}
-	public String getPostcode() {
+	public int getPostcode() {
 		return postcode;
 	}
 	public String getGemeente() {

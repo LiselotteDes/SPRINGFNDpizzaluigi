@@ -81,6 +81,6 @@ class IndexController {
 		// met JavaBean
 		return new ModelAndView("index", "boodschap", boodschap)
 				.addObject("zaakvoerder", new Persoon("Luigi", "Peperone", 7, true,
-						new Adres("Grote markt", "3", "9700", "Oudenaarde")));
+						new Adres("Grote markt", "3", 9700, "Oudenaarde")));
 	}
 }
