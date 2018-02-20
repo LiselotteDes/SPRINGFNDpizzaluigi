@@ -23,12 +23,22 @@
 </head>
 <body>
 	<h1>Pizza Luigi</h1>
-	<img src='images/pizza.jpg' alt='pizza' class='fulwidth'>
+	<img src='images/pizza.jpg' alt='pizza' class='fullwidth'>
 	<!-- 
 	  In een JSP lees je data die de controller doorgaf met een miniprogrammeertaal: 
 	  EL (Expression Language). Elke EL expressie begint met $ gevolgd door { en eindigt op }.
 	  Je leest de inhoud van de data met de naam boodschap met ${boodschap}
 	-->
 	<h2>${boodschap}</h2>
+	<!-- EL en JavaBeans -->
+	<h2>De zaakvoerder</h2>
+	<dl>
+		<dt>Naam</dt><dd>${zaakvoerder.naam}</dd>
+		<dt>Aantal kinderen</dt><dd>${zaakvoerder.aantalKinderen}</dd>
+		<dt>Gehuwd</dt><dd>${zaakvoerder.gehuwd ? 'Ja' : 'Nee'}</dd>
+		<dt>Adres</dt>
+		<dd>${zaakvoerder.adres.straat} ${zaakvoerder.adres.huisNr}<br>
+			${zaakvoerder.adres.postcode} ${zaakvoerder.adres.gemeente }</dd>
+	</dl>
 </body>
 </html>

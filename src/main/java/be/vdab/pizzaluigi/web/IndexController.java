@@ -1,10 +1,13 @@
 package be.vdab.pizzaluigi.web;
 import java.time.LocalTime;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+
+import be.vdab.pizzaluigi.valueobjects.Adres;
+import be.vdab.pizzaluigi.valueobjects.Persoon;
 // Je tikt @RestController voor een class die dient als controller
 //@RestController
 /*
@@ -74,6 +77,10 @@ class IndexController {
 		 *  nadat in application.properties de plaats en de extensie van de JSP's 
 		 *  zijn opgegeven als prefix en suffix:
 		 */
-		return new ModelAndView("index", "boodschap", boodschap);
+//		return new ModelAndView("index", "boodschap", boodschap);
+		// met JavaBean
+		return new ModelAndView("index", "boodschap", boodschap)
+				.addObject("zaakvoerder", new Persoon("Luigi", "Peperone", 7, true,
+						new Adres("Grote markt", "3", "9700", "Oudenaarde")));
 	}
 }
