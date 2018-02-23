@@ -17,6 +17,7 @@ import be.vdab.pizzaluigi.entities.Pizza;
 @RequestMapping("pizzas")
 class PizzaController {
 	private final static String PIZZAS_VIEW = "pizzas";
+	private final static String PIZZA_VIEW = "pizza";
 //	private final List<Pizza> pizzas = Arrays.asList(
 //			new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true),
 //			new Pizza(14, "Margherita", BigDecimal.valueOf(5), false),
@@ -31,5 +32,19 @@ class PizzaController {
 	@GetMapping
 	ModelAndView pizzas() {
 		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzas);
+	}
+	/*
+	 * Je geeft aan dat GET requests naar pizzas door de method pizza verwerkt worden,
+	 * maar enkel als de query string een parameter id bevat.
+	 */
+	@GetMapping(params="id")
+	/*
+	 * Je wil de inhoud van die parameter id kennen.
+	 * Het volstaat daartoe een parameter met dezelfde naam aan je Java method toe te voegen.
+	 * Spring zal de inhoud van de parameter id in de query string 
+	 * overbrengen naar deze method parameter.
+	 */
+	ModelAndView pizza(long id) {
+		return new ModelAndView(PIZZA_VIEW, "pizza", pizzas.get(id));
 	}
 }
