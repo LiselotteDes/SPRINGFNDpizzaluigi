@@ -4,9 +4,12 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-	<title>Pizza's</title>
-	<meta name="viewport" content="widt=device-width,initial-scale=1">
-	<link rel="stylesheet" href="css/pizzaluigi.css">
+	<!-- 	<title>Pizza's</title> -->
+	<!-- 	<meta name="viewport" content="widt=device-width,initial-scale=1"> -->
+	<!-- 	<link rel="stylesheet" href="css/pizzaluigi.css"> -->
+	<c:import url="/WEB-INF/JSP/head.jsp">
+		<c:param name="title" value="Pizza's"/>
+	</c:import>
 </head>
 <body>
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
