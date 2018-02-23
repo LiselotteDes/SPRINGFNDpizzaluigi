@@ -1,7 +1,12 @@
 package be.vdab.pizzaluigi.web;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,7 +61,21 @@ class IndexController {
 	 *  *** Data doorgeven van de controller naar de JSP ***
 	 *  Een controller die data doorgeeft aan de JSP moet als returntype ModelAndView hebben.
 	 */
-	ModelAndView index() {
+//	ModelAndView index() {
+	/*
+	 * *** Wijzig de method-declaratie om met Cookies te werken ***
+	 * Spring zal de inhoud van de cookie met de naam laatstBezocht automatisch invullen in 
+	 * de method parameter die volgt op @CookieValue: laatstBezocht.
+	 * Standaard krijg je een fout als deze cookie niet bestaat.
+	 * Door required op false te plaatsen los je dit op: 
+	 * als de cookie niet bestaat vult Spring de method parameter laatstBezocht met null.
+	 */
+	ModelAndView index(@CookieValue(name="laatstBezocht", required = false) 
+				/*
+				 * Om een cookie te schrijven heb je een object nodig van het type HttpServletResponse.
+				 * Dit low-level object laat toe de response verfijnd in te stellen.
+				 */
+				String laatstBezocht, HttpServletResponse response) {
 		String boodschap;
 		int uur = LocalTime.now().getHour();
 		if (uur < 12) {
@@ -78,9 +97,28 @@ class IndexController {
 		 *  zijn opgegeven als prefix en suffix:
 		 */
 //		return new ModelAndView("index", "boodschap", boodschap);
-		// met JavaBean
-		return new ModelAndView("index", "boodschap", boodschap)
+		// *** met JavaBean ***
+//		return new ModelAndView("index", "boodschap", boodschap)
+//				.addObject("zaakvoerder", new Persoon("Luigi", "Peperone", 7, true,
+//						new Adres("Grote markt", "3", 9700, "Oudenaarde")));
+		
+		// *** Wijzig het return statement van de method die met cookies werkt ***
+		// Maakt een cookie met de naam laatstBezocht en als inhoud de systeemtijd.
+		Cookie cookie = new Cookie("laatstBezocht", LocalDateTime.now().toString());
+		// Laat de cookie na 365 dagen vervallen
+		cookie.setMaxAge(31_536_000);
+		// Voegt deze cookie toe aan de response die naar de browser gestuurd wordt.
+		response.addCookie(cookie);
+		ModelAndView modelAndView = new ModelAndView("index", "boodschap", boodschap)
 				.addObject("zaakvoerder", new Persoon("Luigi", "Peperone", 7, true,
 						new Adres("Grote markt", "3", 9700, "Oudenaarde")));
+		/*
+		 * Als je de cookie laatstBezocht (ingesteld bij een vorig bezoek aan deze pagina)
+		 * kon lezen, geef je hem door aan de JSP als data met de naam laatstBezocht
+		 */
+		if (laatstBezocht != null) {
+			modelAndView.addObject("laatstBezocht", laatstBezocht);
+		}
+		return modelAndView;
 	}
 }
