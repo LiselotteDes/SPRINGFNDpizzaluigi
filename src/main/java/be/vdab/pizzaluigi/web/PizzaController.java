@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,14 +38,28 @@ class PizzaController {
 	 * Je geeft aan dat GET requests naar pizzas door de method pizza verwerkt worden,
 	 * maar enkel als de query string een parameter id bevat.
 	 */
-	@GetMapping(params="id")
+//	@GetMapping(params="id")
+	/*
+	 * Bij de class staat @RequestMapping("pizzas").
+	 * De class verwerkt dus requests naar URL's die beginnen met /pizzas.
+	 * Je voegt hier {id} aan toe.
+	 * Je bekomt zo de URI template pizzas/{id}.
+	 * De method pizza verwerkt zo requests naar URL's die passen bij /pizzas/{id}.
+	 */
+	@GetMapping("{id}")
 	/*
 	 * Je wil de inhoud van die parameter id kennen.
 	 * Het volstaat daartoe een parameter met dezelfde naam aan je Java method toe te voegen.
 	 * Spring zal de inhoud van de parameter id in de query string 
 	 * overbrengen naar deze method parameter.
 	 */
-	ModelAndView pizza(long id) {
+//	ModelAndView pizza(long id) {
+	/*
+	 * Je tikt voor een method parameter @PathVariable.
+	 * Spring vult die method parameter met 
+	 * de waarde van de path variabele met dezelfde naam (id) in de URL van de binnengekomen request.
+	 */
+	ModelAndView pizza(@PathVariable long id) {
 		return new ModelAndView(PIZZA_VIEW, "pizza", pizzas.get(id));
 	}
 }

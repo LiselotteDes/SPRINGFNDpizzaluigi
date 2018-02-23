@@ -1,6 +1,8 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" session="false"%>
-<!-- Associeert de prefix c met de URI van de core library die de tag forEach bevat. -->
+<%-- Associeert de prefix c met de URI van de core library die de tag forEach bevat. --%>
 <%@taglib prefix = 'c' uri='http://java.sun.com/jsp/jstl/core'%>
+<%-- Voegt een verwijzing toe naar de Spring tag library --%>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -20,20 +22,20 @@
 		</c:forEach>
 	</h1>
 	<ul class="zebra">
-<%-- 
-  Itereert over de List in pizzas.
-  De variabele pizza wijst bij elke iteratie naar een volgend element.
--->
-
-<%--<c:forEach var="pizza" items="${pizzas}"> --%>
-<%-- 	<!-- 
-<%-- 	  Toont het huidig element. -->
-<%-- 	  Roept met $ {pizza.naam} de method getNaam op van het Pizza object. -->
-<%-- 	  Roept met $ {pizza.prijs} de method getPrijs op van het Pizza object. -->
-<%-- 	-->
-<%-- 	<li>${pizza.naam} ${pizza.prijs} &euro;</li> --%>
-<%--<!-- Sluit de foreach af -->
-<%--</c:forEach> --%>
+	<%-- 
+	  Itereert over de List in pizzas.
+	  De variabele pizza wijst bij elke iteratie naar een volgend element.
+	-->
+	
+	<%--<c:forEach var="pizza" items="${pizzas}"> --%>
+	<%-- 	<!-- 
+	<%-- 	  Toont het huidig element. -->
+	<%-- 	  Roept met $ {pizza.naam} de method getNaam op van het Pizza object. -->
+	<%-- 	  Roept met $ {pizza.prijs} de method getPrijs op van het Pizza object. -->
+	<%-- 	-->
+	<%-- 	<li>${pizza.naam} ${pizza.prijs} &euro;</li> --%>
+	<%--<!-- Sluit de foreach af -->
+	<%--</c:forEach> --%>
 
 	<c:forEach var="entry" items="${pizzas}">
 		<li>
@@ -46,9 +48,24 @@
 					niet pikant
 				</c:otherwise>
 			</c:choose>
+			<%--
 			<c:url value="/pizzas" var="url">
 				<c:param name="id" value="${entry.key}"/>
 			</c:url>
+			 --%>
+			 <%-- De tag url maakt een clean URL. 
+			      value bevat de bijbehorende URI template. --%>
+			<spring:url value="/pizzas/{id}" var="url">
+				<%-- 
+				  Je vult de path variabele in de URI template van hierboven in.
+				  name bevat naam van de path variabele, 
+				  value bevat de waarde voor de path variabele.
+				  Als de pizza de id 1 heeft, bevat de variabele url de URL /pizzas/1.
+				  Als de URI template meerdere path variabelen bevat, 
+				  schrijf je meerdere regels zoals hieronder.
+				--%>
+				<spring:param name="id" value="${entry.key}"/>
+			</spring:url>
 			<a href="${url}">Detail</a>
 		</li>
 	</c:forEach>
