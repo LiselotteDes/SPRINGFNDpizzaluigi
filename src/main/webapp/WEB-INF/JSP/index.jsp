@@ -28,7 +28,7 @@
 <body>
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
 	<h1>Pizza Luigi</h1>
-	<img src='images/pizza.jpg' alt='pizza' class='fullwidth'>
+	<img src='<c:url value="/images/pizza.jpg"/>' alt='pizza' class='fullwidth' >
 	<!-- 
 	  In een JSP lees je data die de controller doorgaf met een miniprogrammeertaal: 
 	  EL (Expression Language). Elke EL expressie begint met $ gevolgd door { en eindigt op }.
