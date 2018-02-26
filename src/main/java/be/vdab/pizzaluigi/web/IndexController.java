@@ -1,6 +1,7 @@
 package be.vdab.pizzaluigi.web;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -15,10 +16,7 @@ import be.vdab.pizzaluigi.valueobjects.Adres;
 import be.vdab.pizzaluigi.valueobjects.Persoon;
 // Je tikt @RestController voor een class die dient als controller
 //@RestController
-/*
- * Als een controller samenwerkt met een JSP om een browser request te verwerken,
- * tik je voor de class @Controller in plaats van @RestController.
- */
+// Als een controller samenwerkt met een JSP om e browser request te verwerken, tik je voor d class @Controller ipv @RestController.
 @Controller
 /*
  * Je associeert met @RequestMapping de controller met een URL in je website.
@@ -32,6 +30,9 @@ import be.vdab.pizzaluigi.valueobjects.Persoon;
  * geef je ook classes niet meer visibility dan nodig.
  */
 class IndexController {
+	// *** Multithreading *** vb: maak een teller die het aantal requests over de browser heen bijhoudt.
+	// De constructor van AtomicInteger initialiseert de getalwaarde in die AtomicInteger op 0.
+	private final AtomicInteger aantalKeerBekeken = new AtomicInteger();
 	// Je tikt @GetMapping voor een method die browser GET requests verwerkt.
 	@GetMapping
 	/*
@@ -119,6 +120,11 @@ class IndexController {
 		if (laatstBezocht != null) {
 			modelAndView.addObject("laatstBezocht", laatstBezocht);
 		}
+		/*
+		 * De method incrementAndGet verhoogt de teller in de AtomicInteger op een thread-safe manier
+		 * en geeft deze teller terug als returnwaarde.
+		 */
+		modelAndView.addObject("aantalKeerBekeken", aantalKeerBekeken.incrementAndGet());
 		return modelAndView;
 	}
 }
