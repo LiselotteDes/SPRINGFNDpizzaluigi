@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.pizzaluigi.entities.Pizza;
+import be.vdab.pizzaluigi.services.EuroService;
 /*
  * Een PizzaController die GET requests verwerkt naar de URL pizzas.html:
  */
@@ -26,11 +27,19 @@ class PizzaController {
 //			new Pizza(14, "Margherita", BigDecimal.valueOf(5), false),
 //			new Pizza(17, "Calzone", BigDecimal.valueOf(4), false));
 	private final Map<Long, Pizza> pizzas = new LinkedHashMap<>();	// keys:pizza ids
-	PizzaController() {
+	private final EuroService euroService;
+	/*
+	 * Bij het unit testen van de controller roep je de constructor op en geef je
+	 * een dummyEuroService object mee.
+	 * Bij het uitvoeren van de website roept Spring deze constructor op en geeft de bean mee die
+	 * deze interface implementeert: de bean gebaseerd op de class DefaultEuroService.
+	 */
+	PizzaController(EuroService euroService) {
 		pizzas.put(12L, new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true));
 		pizzas.put(14L, new Pizza(14, "Margherita", BigDecimal.valueOf(5), false));
 		pizzas.put(17L, new Pizza(17, "Calzone", BigDecimal.valueOf(4), false));
 		pizzas.put(23L, new Pizza(23, "Fungi & Olive", BigDecimal.valueOf(5), false));
+		this.euroService = euroService;
 	}
 	@GetMapping
 	ModelAndView pizzas() {
@@ -62,7 +71,16 @@ class PizzaController {
 	 * de waarde van de path variabele met dezelfde naam (id) in de URL van de binnengekomen request.
 	 */
 	ModelAndView pizza(@PathVariable long id) {
-		return new ModelAndView(PIZZA_VIEW, "pizza", pizzas.get(id));
+		/*
+		 * Gebruikt voor het eerst de ModelAndView constructor met één parameter:
+		 * de naam van de JSP.
+		 * Verder in de code geef je met de addObject method ook data door aan die JSP.
+		 */
+		ModelAndView modelAndView = new ModelAndView(PIZZA_VIEW);
+		Pizza pizza = pizzas.get(id);
+		modelAndView.addObject(pizza);
+		modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
+		return modelAndView;
 	}
 	@GetMapping("prijzen")
 	ModelAndView prijzen() {

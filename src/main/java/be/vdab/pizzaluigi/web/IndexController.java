@@ -16,7 +16,7 @@ import be.vdab.pizzaluigi.valueobjects.Adres;
 import be.vdab.pizzaluigi.valueobjects.Persoon;
 // Je tikt @RestController voor een class die dient als controller
 //@RestController
-// Als een controller samenwerkt met een JSP om e browser request te verwerken, tik je voor d class @Controller ipv @RestController.
+// Als een controller samenwerkt met een JSP om een browser request te verwerken, tik je voor de class @Controller ipv @RestController.
 @Controller
 /*
  * Je associeert met @RequestMapping de controller met een URL in je website.
