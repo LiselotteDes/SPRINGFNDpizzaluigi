@@ -1,7 +1,7 @@
 package be.vdab.pizzaluigi.services;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import be.vdab.pizzaluigi.restclients.KoersClient;
 /*
@@ -30,7 +30,13 @@ class DefaultEuroService implements EuroService {
 	 * Als Spring zo'n bean niet vindt, krijg je een exception. 
 	 * We zorgen er straks voor dat Spring een bean ter beschikking heeft gebaseerd op de class FixerKoersClient.
 	 */
-	DefaultEuroService(KoersClient koersClient) {
+//	DefaultEuroService(KoersClient koersClient) {
+	/*
+	 * Je tikt @Qualifier vóór de te injecteren parameter. Je geeft de string Fixer mee.
+	 * Spring injecteert de bean van de class die de interface KoersClient implementeert
+	 * én voorzien is van de @Qualifier("Fixer"). Dit is de bean van de class FixerKoersClient.
+	 */
+	DefaultEuroService(@Qualifier("Fixer") KoersClient koersClient) {
 		this.koersClient = koersClient;
 	}
 	/* (non-Javadoc)
