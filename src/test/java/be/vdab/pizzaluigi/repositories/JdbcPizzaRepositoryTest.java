@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import be.vdab.pizzaluigi.entities.Pizza;
-import junit.framework.Assert;
 /*
  * Integration test van een repository bean: test de repository bean met zijn samenwerking met de database.
  * De test is zo geschreven dat het niet uitmaakt of er reeds records in de db aanwezig zijn en hoeveel records er reeds in de db aanwezig zijn.
@@ -108,11 +107,12 @@ public class JdbcPizzaRepositoryTest {
 	public void findUniekePrijzenGeeftOplopendePrijzen() {
 		voegPizzaToe();
 		BigDecimal vorigePrijs = BigDecimal.valueOf(-1);
-//		for(BigDecimal prijs : repository.findUniekePrijzen()) {
-//			assertTrue(prijs.compareTo(vorigePrijs) > 0);
-//		}
+		for(BigDecimal prijs : repository.findUniekePrijzen()) {
+			assertTrue(prijs.compareTo(vorigePrijs) > 0);
+			vorigePrijs = prijs;
+		}
 		
-		repository.findUniekePrijzen().stream().forEach(prijs -> assertTrue(prijs.compareTo(vorigePrijs) > 0));
+//		repository.findUniekePrijzen().stream().forEach(prijs -> assertTrue(prijs.compareTo(vorigePrijs) > 0));
 	}
 	@Test
 	public void findByPrijsGeeftJuistePizzas() {
