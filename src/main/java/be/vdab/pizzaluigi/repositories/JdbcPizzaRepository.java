@@ -43,7 +43,7 @@ class JdbcPizzaRepository implements PizzaRepository {
 	private final RowMapper<Pizza> pizzaRowMapper = (resultSet, rowNum) -> 
 		new Pizza(resultSet.getLong("id"), resultSet.getString("naam"), resultSet.getBigDecimal("prijs"), resultSet.getBoolean("pikant"));
 	private static final String SQL_SELECT_ALL = 
-			"select id, naam, prijs, pikant from pizzas roder by id";
+			"select id, naam, prijs, pikant from pizzas order by id";
 	private static final String SQL_SELECT_BY_PRIJS_BETWEEN = 
 			"select id, naam, prijs, pikant from pizzas" 
 			+ " where prijs between :van and :tot"

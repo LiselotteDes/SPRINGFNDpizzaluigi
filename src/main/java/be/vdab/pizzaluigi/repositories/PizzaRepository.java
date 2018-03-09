@@ -5,7 +5,7 @@ import java.util.Optional;
 import be.vdab.pizzaluigi.entities.Pizza;
 /*
  * Je beschrijft de functionaliteit van de repositories laag in een interface:
- * (CRUD-methods & find-methods)
+ * (CRUD- & find-methods)
  */
 public interface PizzaRepository {
 	void create(Pizza pizza);
