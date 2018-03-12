@@ -3,7 +3,7 @@ import java.math.BigDecimal;
 //import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
+//import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +21,7 @@ class PizzaController {
 	private final static String PIZZAS_VIEW = "pizzas";
 	private final static String PIZZA_VIEW = "pizza";
 	private final static String PRIJZEN_VIEW = "prijzen";
+	private final static String VAN_TOT_PRIJS_VIEW = "vantotprijs";
 //	private final List<Pizza> pizzas = Arrays.asList(
 //			new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true),
 //			new Pizza(14, "Margherita", BigDecimal.valueOf(5), false),
@@ -106,5 +107,12 @@ class PizzaController {
 //				.addObject("prijzen", pizzas.values().stream()
 //						.map(pizza -> pizza.getPrijs()).distinct().collect(Collectors.toSet()));
 				.addObject("prijzen", pizzaService.findUniekePrijzen());
+	}
+	@GetMapping("vantotprijs")
+	ModelAndView findVanTotPrijs() {
+		VanTotPrijsForm form = new VanTotPrijsForm();
+		form.setVan(BigDecimal.ZERO);
+		form.setTot(BigDecimal.ZERO);
+		return new ModelAndView(VAN_TOT_PRIJS_VIEW).addObject(form);
 	}
 }
