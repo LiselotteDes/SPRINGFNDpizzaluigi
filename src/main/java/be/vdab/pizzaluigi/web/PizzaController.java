@@ -13,9 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.pizzaluigi.entities.Pizza;
 import be.vdab.pizzaluigi.services.EuroService;
-/*
- * Een PizzaController die GET requests verwerkt naar de URL pizzas.html:
- */
+import be.vdab.pizzaluigi.services.PizzaService;
+// Een PizzaController die GET requests verwerkt naar de URL pizzas.html:
 @Controller
 @RequestMapping("pizzas")
 class PizzaController {
@@ -28,22 +27,25 @@ class PizzaController {
 //			new Pizza(17, "Calzone", BigDecimal.valueOf(4), false));
 	private final Map<Long, Pizza> pizzas = new LinkedHashMap<>();	// keys:pizza ids
 	private final EuroService euroService;
+	private final PizzaService pizzaService;
 	/*
 	 * Bij het unit testen van de controller roep je de constructor op en geef je
 	 * een dummyEuroService object mee.
 	 * Bij het uitvoeren van de website roept Spring deze constructor op en geeft de bean mee die
 	 * deze interface implementeert: de bean gebaseerd op de class DefaultEuroService.
 	 */
-	PizzaController(EuroService euroService) {
-		pizzas.put(12L, new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true));
-		pizzas.put(14L, new Pizza(14, "Margherita", BigDecimal.valueOf(5), false));
-		pizzas.put(17L, new Pizza(17, "Calzone", BigDecimal.valueOf(4), false));
-		pizzas.put(23L, new Pizza(23, "Fungi & Olive", BigDecimal.valueOf(5), false));
+	PizzaController(EuroService euroService, PizzaService pizzaService) {
+//		pizzas.put(12L, new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true));
+//		pizzas.put(14L, new Pizza(14, "Margherita", BigDecimal.valueOf(5), false));
+//		pizzas.put(17L, new Pizza(17, "Calzone", BigDecimal.valueOf(4), false));
+//		pizzas.put(23L, new Pizza(23, "Fungi & Olive", BigDecimal.valueOf(5), false));
 		this.euroService = euroService;
+		this.pizzaService = pizzaService;
 	}
 	@GetMapping
 	ModelAndView pizzas() {
-		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzas);
+//		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzas);
+		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzaService.findAll());
 	}
 	/*
 	 * Je geeft aan dat GET requests naar pizzas door de method pizza verwerkt worden,
@@ -77,25 +79,32 @@ class PizzaController {
 		 * Verder in de code geef je met de addObject method ook data door aan die JSP.
 		 */
 		ModelAndView modelAndView = new ModelAndView(PIZZA_VIEW);
-		Pizza pizza = pizzas.get(id);
-		modelAndView.addObject(pizza);
-		modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
+//		Pizza pizza = pizzas.get(id);
+//		modelAndView.addObject(pizza);
+//		modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
+		pizzaService.read(id).ifPresent(pizza -> {
+			modelAndView.addObject(pizza);
+			modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
+		});
 		return modelAndView;
 	}
 	@GetMapping("prijzen")
 	ModelAndView prijzen() {
 		return new ModelAndView(PRIJZEN_VIEW, "prijzen", 
-				pizzas.values().stream()
-				.map(pizza -> pizza.getPrijs()).distinct().collect(Collectors.toSet()));
+//				pizzas.values().stream()
+//				.map(pizza -> pizza.getPrijs()).distinct().collect(Collectors.toSet()));
+				pizzaService.findUniekePrijzen());
 	}
 	@GetMapping(params="prijs")
 	ModelAndView pizzasVanPrijs(BigDecimal prijs) {
 		return new ModelAndView(PRIJZEN_VIEW, "pizzas",
-				pizzas.values().stream()
-					.filter(pizza -> pizza.getPrijs().equals(prijs))
-					.collect(Collectors.toList()))
+//				pizzas.values().stream()
+//					.filter(pizza -> pizza.getPrijs().equals(prijs))
+//					.collect(Collectors.toList()))
+				pizzaService.findByPrijs(prijs))
 				.addObject("prijs", prijs)
-				.addObject("prijzen", pizzas.values().stream()
-						.map(pizza -> pizza.getPrijs()).distinct().collect(Collectors.toSet()));
+//				.addObject("prijzen", pizzas.values().stream()
+//						.map(pizza -> pizza.getPrijs()).distinct().collect(Collectors.toSet()));
+				.addObject("prijzen", pizzaService.findUniekePrijzen());
 	}
 }

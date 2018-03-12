@@ -37,11 +37,14 @@
 	<%--<!-- Sluit de foreach af -->
 	<%--</c:forEach> --%>
 
-	<c:forEach var="entry" items="${pizzas}">
+	<%--<c:forEach var="entry" items="${pizzas}"> --%>
+	<c:forEach var="pizza" items="${pizzas}">
 		<li>
-			${entry.key}: <c:out value="${entry.value.naam}"/> ${entry.value.prijs}&euro;
+			<%-- ${entry.key}: <c:out value="${entry.value.naam}"/> ${entry.value.prijs}&euro; --%>
+			${pizza.id}: <c:out value="${pizza.naam}"/> ${pizza.prijs}&euro;
 			<c:choose>
-				<c:when test="${entry.value.pikant}">
+				<%-- <c:when test="${entry.value.pikant}"> --%>
+				<c:when test="${pizza.pikant}">
 					pikant
 				</c:when>
 				<c:otherwise>
@@ -64,7 +67,8 @@
 				  Als de URI template meerdere path variabelen bevat, 
 				  schrijf je meerdere regels zoals hieronder.
 				--%>
-				<spring:param name="id" value="${entry.key}"/>
+				<%-- <spring:param name="id" value="${entry.key}"/> --%>
+				<spring:param name="id" value="${pizza.id}"/>
 			</spring:url>
 			<a href="${url}">Detail</a>
 		</li>
