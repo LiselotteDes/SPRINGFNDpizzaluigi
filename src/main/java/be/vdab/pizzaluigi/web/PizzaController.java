@@ -2,10 +2,12 @@ package be.vdab.pizzaluigi.web;
 import java.math.BigDecimal;
 //import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 //import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,11 +110,70 @@ class PizzaController {
 //						.map(pizza -> pizza.getPrijs()).distinct().collect(Collectors.toSet()));
 				.addObject("prijzen", pizzaService.findUniekePrijzen());
 	}
+	/*
+	 * De HTML form tonen aan de gebruiker:
+	 * Je toont de form bij een GET request naar de url /pizzas/vantotprijs.
+	 * Je verwerkt die request in deze method.
+	 */
 	@GetMapping("vantotprijs")
 	ModelAndView findVanTotPrijs() {
 		VanTotPrijsForm form = new VanTotPrijsForm();
+		/*
+		 * Initialiseert de properties van het form object.
+		 * Het resultaat hiervan is dat als de gebruiker in de pagina binnenkomt, de 2 invoervakken de waarde nul bevatten.
+		 * Als je liever hebt dat deze invoervakken leeg zijn, verwijder je deze regels.
+		 */
 		form.setVan(BigDecimal.ZERO);
 		form.setTot(BigDecimal.ZERO);
+		// Je geeft het form object aan de JSP onder de naam vanTotPrijsForm ("parameter name generation")
 		return new ModelAndView(VAN_TOT_PRIJS_VIEW).addObject(form);
+	}
+	/*
+	 * De HTML form verwerken na de submit:
+	 * Als de gebruiker de form submit, verstuurt de browser een request naar de action url, met de inhoud van de tekstvakken in de query string,
+	 * bv: /pizzas/van=3&tot=4.
+	 * Spring verwerkt deze request door met de default constructor een form object te maken 
+	 * en vervolgens met de setters de inhoud van de vakken mee te geven.
+	 * 
+	 * Deze method verwerkt GET requests naar /pizzas,
+	 * op voorwaarde dat die de request parameters van en tot bevat:
+	 */
+	@GetMapping(params = {"van", "tot"})
+	/*
+	 * De method heeft een VanTotPrijsForm parameter.
+	 * Spring ziet dit en maakt een VanTotPrijsForm object met de default constructor.
+	 * Spring ziet dat de request een parameter van bevat.
+	 * Spring ziet dat de class VanTotPrijsForm een method setVan bevat.
+	 * Spring roept setVan op en geeft de waarde van de request parameter van mee.
+	 * Spring ziet dat de request ook een parameter tot bevat.
+	 * Spring ziet dat de class VanTotPrijsForm een method setTot bevat.
+	 * Spring roept setTot op en geeft de waarde van de request parameter tot mee.
+	 * Daarna roept Spring de huidige method findVanTotPrijs op en geeft zijn opgevuld VanTotPrijsForm object mee.
+	 */
+	ModelAndView findVanTotPrijs(VanTotPrijsForm form,
+			/*
+			 * Je kan het mislukken van de conversie (inhoud vh invoervak naar het setter parameter type) nazien i/e object v/h type BindingResult.
+			 * Deze BindingResult parameter moet volgen op de parameter met het form object.
+			 */
+			BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView(VAN_TOT_PRIJS_VIEW);
+		// De method hasErrors geeft true als de DataBinder fouten ontdekte bij de form validatie.
+		if (bindingResult.hasErrors()) {
+			return modelAndView;
+		}
+		// Je zoekt enkel pizza's als er geen fouten waren.
+		// Je zoekt de pizza's met de PizzaService method findByPrijsBetween.
+		List<Pizza> pizzas = pizzaService.findByPrijsBetween(form.getVan(), form.getTot());
+		if (pizzas.isEmpty()) {
+			/*
+			 * Maakt een ALGEMENE boodschap die niet aan één vak verbonden is.
+			 * De key van de foutboodschap is geenPizzas.
+			 */
+			bindingResult.reject("geenPizzas");
+		} else {
+			// Je geeft deze pizza's onder de naam pizzas door aan de JSP.
+			modelAndView.addObject("pizzas", pizzas);
+		}
+		return modelAndView;
 	}
 }
