@@ -1,10 +1,15 @@
 package be.vdab.pizzaluigi.valueobjects;
+import javax.validation.Valid;
+import org.hibernate.validator.constraints.Range;
 // Werken volgens de JAVABEAN STANDAARD
 public class Persoon {
 	private String voornaam;
 	private String familienaam;
+	@Range(min = 0, max = 69)
 	private int aantalKinderen;
 	private boolean gehuwd;
+	// Bean validation valideert bij de validatie van een Persoon object ook zijn Adres object en controleert dus of de postcode ligt tss 1000 en 9999.
+	@Valid
 	private Adres adres;
 	// *** CONSTRUCTORS ***
 	/*

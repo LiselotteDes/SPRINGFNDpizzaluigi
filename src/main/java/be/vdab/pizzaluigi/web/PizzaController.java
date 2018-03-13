@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 //import java.util.stream.Collectors;
+import javax.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -150,7 +151,7 @@ class PizzaController {
 	 * Spring roept setTot op en geeft de waarde van de request parameter tot mee.
 	 * Daarna roept Spring de huidige method findVanTotPrijs op en geeft zijn opgevuld VanTotPrijsForm object mee.
 	 */
-	ModelAndView findVanTotPrijs(VanTotPrijsForm form,
+	ModelAndView findVanTotPrijs(@Valid VanTotPrijsForm form,
 			/*
 			 * Je kan het mislukken van de conversie (inhoud vh invoervak naar het setter parameter type) nazien i/e object v/h type BindingResult.
 			 * Deze BindingResult parameter moet volgen op de parameter met het form object.
