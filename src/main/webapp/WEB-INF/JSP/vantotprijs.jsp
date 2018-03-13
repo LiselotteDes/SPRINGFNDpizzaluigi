@@ -27,9 +27,10 @@
 		  De tag verwacht dat je bij elk attribuut een waarde meegeeft met =, ook bij het attribuut autofocus.
 		  Je geeft dan de waarde "autofocus" mee.
 		  Er bestaat naast <form:input ...> ook <form:password ...>, ... --%>
-		<form:input path="van" autofocus="autofocus"/>
+		<%-- Met HTML 5 is client sided validation toegevoegd. Dus nu gebeurt de validatie zowel op de server als op de browser. --%>
+		<form:input path="van" autofocus="autofocus" type="number" required="required" min="0"/>
 		<form:label path="tot">Tot:<form:errors path="tot"/></form:label>
-		<form:input path="tot"/>
+		<form:input path="tot" required="required" type="number" min="0"/>
 		<%-- De tag library bevat geen tag om een submit knop te maken.
 		  Je gebruikt de klassieke HTML tag <input type="submit" ...> --%>
 		<input type="submit" value="Zoeken">
