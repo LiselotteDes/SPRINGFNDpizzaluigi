@@ -3,11 +3,14 @@ import java.math.BigDecimal;
 // Bean validation is een officiele Java (zie package) specificatie waarmee je objecten valideert.
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 public class Pizza {
 	private long id;
+	@NotBlank
 	private String naam;
 	// Beschrijft een validatie voor de variabele prijs: de inhoud is >=0 en <=99. (je kan bij 1 variabele meerdere validation annotations schrijven)
-	@Min(0) @Max(99)
+	@NotNull @Min(0) @Max(99)
 	private BigDecimal prijs;	// moet dus een waarde tussen 0 en 99 bevatten
 	private boolean pikant;
 	public Pizza(long id, String naam, BigDecimal prijs, boolean pikant) {

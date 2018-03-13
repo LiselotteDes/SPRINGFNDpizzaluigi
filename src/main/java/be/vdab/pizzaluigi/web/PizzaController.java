@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,6 +26,7 @@ class PizzaController {
 	private final static String PIZZA_VIEW = "pizza";
 	private final static String PRIJZEN_VIEW = "prijzen";
 	private final static String VAN_TOT_PRIJS_VIEW = "vantotprijs";
+	private final static String TOEVOEGEN_VIEW = "toevoegen";
 //	private final List<Pizza> pizzas = Arrays.asList(
 //			new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true),
 //			new Pizza(14, "Margherita", BigDecimal.valueOf(5), false),
@@ -176,5 +178,20 @@ class PizzaController {
 			modelAndView.addObject("pizzas", pizzas);
 		}
 		return modelAndView;
+	}
+	/*
+	 * Als de gebruiker in het menu Toevoegen kiest, doet hij een GET request naar /pizzas/toevoegen.
+	 * Je toont dan de toevoegpagina.
+	 */
+	@GetMapping("toevoegen")
+	ModelAndView toevoegen() {
+		// Geeft een Pizza object door aan de JSP. Je zal dit object daar gebruiken als form object.
+		return new ModelAndView(TOEVOEGEN_VIEW).addObject(new Pizza());
+	}
+	@PostMapping("toevoegen")
+	ModelAndView toevoegen(@Valid Pizza pizza, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return new ModelAndView(TOEVOEGEN_VIEW);
+		}
 	}
 }
