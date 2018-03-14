@@ -27,6 +27,8 @@ class PizzaController {
 	private final static String PRIJZEN_VIEW = "prijzen";
 	private final static String VAN_TOT_PRIJS_VIEW = "vantotprijs";
 	private final static String TOEVOEGEN_VIEW = "toevoegen";
+	// Als je een URL zal gebruiken als redirect URL, tik je voor de URL redirect:
+	private final static String REDIRECT_URL_NA_TOEVOEGEN = "redirect:/pizzas";
 //	private final List<Pizza> pizzas = Arrays.asList(
 //			new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true),
 //			new Pizza(14, "Margherita", BigDecimal.valueOf(5), false),
@@ -188,10 +190,28 @@ class PizzaController {
 		// Geeft een Pizza object door aan de JSP. Je zal dit object daar gebruiken als form object.
 		return new ModelAndView(TOEVOEGEN_VIEW).addObject(new Pizza());
 	}
+	/*
+	 * Wanneer de gebruiker de form (hierboven) submit, stuurt de browser een POST request naar de webserver. Volgende method verwerkt die request.
+	 * 
+	 * Je geeft aan dat de method die op deze regel volgt POST requests verwerkt.
+	 * De method verwerkt POST requests naar de URL vermeld bij @RequestMappings (pizzas), 
+	 * gecombineerd met de URL vermeld bij @PostMapping (toevoegen): pizzas/toevoegen.
+	 */
 	@PostMapping("toevoegen")
 	ModelAndView toevoegen(@Valid Pizza pizza, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
+			// Als er validatiefouten zijn toon je de pagina met de form opnieuw.
 			return new ModelAndView(TOEVOEGEN_VIEW);
 		}
+		// Voegt de pizza toe aan de database.
+		pizzaService.create(pizza);
+		// Toont de pagina met alle pizzas.
+//		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzaService.findAll());
+		/*
+		 * Wanneer je aan de ModelAndView constructor een String meegeeft die begint met redirect:/, 
+		 * gebruikt Spring deze String niet om een JSP te zoeken die HTML afbeeldt,
+		 * maar gebruikt Spring deze String om een redirect response naar de browser te sturen.
+		 */
+		return new ModelAndView(REDIRECT_URL_NA_TOEVOEGEN);
 	}
 }
