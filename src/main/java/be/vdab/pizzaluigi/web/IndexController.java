@@ -33,6 +33,16 @@ class IndexController {
 	// *** Multithreading *** vb: maak een teller die het aantal requests over de browser heen bijhoudt.
 	// De constructor van AtomicInteger initialiseert de getalwaarde in die AtomicInteger op 0.
 	private final AtomicInteger aantalKeerBekeken = new AtomicInteger();
+	/*
+	 * Om ook op de welkomspagina de identificatie van de gebruiker te tonen, 
+	 * voeg je een private variabele toe die verwijst naar de data in de session van de gebruiker.
+	 */
+	private final Identificatie identificatie;
+	// Je voegt een constructor toe met dependency injection.
+	IndexController(Identificatie identificatie) {
+		this.identificatie = identificatie;
+	}
+	
 	// Je tikt @GetMapping voor een method die browser GET requests verwerkt.
 	@GetMapping
 	/*
@@ -125,6 +135,7 @@ class IndexController {
 		 * en geeft deze teller terug als returnwaarde.
 		 */
 		modelAndView.addObject("aantalKeerBekeken", aantalKeerBekeken.incrementAndGet());
+		modelAndView.addObject("identificatie", identificatie);
 		return modelAndView;
 	}
 }
