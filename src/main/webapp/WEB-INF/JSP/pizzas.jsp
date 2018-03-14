@@ -78,11 +78,5 @@
 		</li>
 	</c:forEach>
 	</ul>
-	
-	<script>
-		document.getElementById("pizzaform").onsubmit = function() {
-			document.getElementById("toevoegknop").disabled = true;
-		}
-	</script>
 </body>
 </html>
