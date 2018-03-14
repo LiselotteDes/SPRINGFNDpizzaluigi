@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+// Om request parameters te kunnen toevoegen aan de URL waarnaar je redirect.
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import be.vdab.pizzaluigi.entities.Pizza;
 import be.vdab.pizzaluigi.services.EuroService;
@@ -198,7 +200,9 @@ class PizzaController {
 	 * gecombineerd met de URL vermeld bij @PostMapping (toevoegen): pizzas/toevoegen.
 	 */
 	@PostMapping("toevoegen")
-	ModelAndView toevoegen(@Valid Pizza pizza, BindingResult bindingResult) {
+	ModelAndView toevoegen(@Valid Pizza pizza, BindingResult bindingResult,
+			// Je kan met een RedirectAttributes parameter verder in de code request parameters toevoegen aan de URL waarnaar je redirect.
+			RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			// Als er validatiefouten zijn toon je de pagina met de form opnieuw.
 			return new ModelAndView(TOEVOEGEN_VIEW);
@@ -207,6 +211,11 @@ class PizzaController {
 		pizzaService.create(pizza);
 		// Toont de pagina met alle pizzas.
 //		return new ModelAndView(PIZZAS_VIEW, "pizzas", pizzaService.findAll());
+		/*
+		 * Spring zal aan de redirect URL een request parameter boodschap toevoegen met de inhoud 'Pizza toegevoegd'.
+		 * Spring zal daarbij de spatie vervangen door het plus teken.
+		 */
+		redirectAttributes.addAttribute("boodschap", "Pizza toegevoegd");
 		/*
 		 * Wanneer je aan de ModelAndView constructor een String meegeeft die begint met redirect:/, 
 		 * gebruikt Spring deze String niet om een JSP te zoeken die HTML afbeeldt,

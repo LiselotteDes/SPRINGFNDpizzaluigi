@@ -15,6 +15,10 @@
 </head>
 <body>
 	<c:import url="/WEB-INF/JSP/menu.jsp"/>
+	<%-- De expressie param.boodschap verwijst naar de request parameter boodschap. --%>
+	<c:if test="${not empty param.boodschap}">
+		<div class="boodschap">${param.boodschap}</div>
+	</c:if>
 	<h1>Pizza's
 		<%-- Itereren zonder verzameling --%>
 		<c:forEach begin="1" end="5">
@@ -74,5 +78,11 @@
 		</li>
 	</c:forEach>
 	</ul>
+	
+	<script>
+		document.getElementById("pizzaform").onsubmit = function() {
+			document.getElementById("toevoegknop").disabled = true;
+		}
+	</script>
 </body>
 </html>
