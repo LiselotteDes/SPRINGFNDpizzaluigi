@@ -5,9 +5,11 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.SafeHtml;
 public class Pizza {
 	private long id;
 	@NotBlank
+	@SafeHtml
 	private String naam;
 	// Beschrijft een validatie voor de variabele prijs: de inhoud is >=0 en <=99. (je kan bij 1 variabele meerdere validation annotations schrijven)
 	@NotNull @Min(0) @Max(99)
