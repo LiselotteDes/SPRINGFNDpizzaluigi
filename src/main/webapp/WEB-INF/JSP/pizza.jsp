@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" session="false"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -13,8 +14,8 @@
 	<dl>
 		<dt>Nummer</dt><dd>${pizza.id}</dd>
 		<dt>Naam</dt><dd>${pizza.naam}</dd>
-		<dt>Prijs</dt><dd>${pizza.prijs}</dd>
-		<dt>In dollar</dt><dd>${inDollar}</dd>
+		<dt>Prijs</dt><dd><spring:eval expression="pizza.prijs"/></dd>
+		<dt>In dollar</dt><dd><spring:eval expression="inDollar.waarde"/></dd>
 		<dt>Pikant</dt><dd>${pizza.pikant ? "ja" : "Nee"}</dd>
 	</dl>
 </body>

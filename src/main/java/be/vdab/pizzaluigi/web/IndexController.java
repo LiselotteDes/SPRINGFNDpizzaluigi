@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import be.vdab.pizzaluigi.valueobjects.Adres;
+import be.vdab.pizzaluigi.valueobjects.DatumTijd;
 import be.vdab.pizzaluigi.valueobjects.Persoon;
 // Je tikt @RestController voor een class die dient als controller
 //@RestController
@@ -128,7 +129,12 @@ class IndexController {
 		 * kon lezen, geef je hem door aan de JSP als data met de naam laatstBezocht
 		 */
 		if (laatstBezocht != null) {
-			modelAndView.addObject("laatstBezocht", laatstBezocht);
+//			modelAndView.addObject("laatstBezocht", laatstBezocht);
+			/*
+			 * De method parse verwacht een String met een datum-tijd als parameter.
+			 * De method geeft een LocalDateTime terug met dezelfde datum-tijd waarde.
+			 */
+			modelAndView.addObject("laatstBezocht", new DatumTijd(LocalDateTime.parse(laatstBezocht)));		// Na toevoegen van een class DatumTijd
 		}
 		/*
 		 * De method incrementAndGet verhoogt de teller in de AtomicInteger op een thread-safe manier

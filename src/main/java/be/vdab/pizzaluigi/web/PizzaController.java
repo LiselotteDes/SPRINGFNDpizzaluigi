@@ -1,9 +1,9 @@
 package be.vdab.pizzaluigi.web;
 import java.math.BigDecimal;
 //import java.util.Arrays;
-import java.util.LinkedHashMap;
+//import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+//import java.util.Map;
 //import java.util.stream.Collectors;
 import javax.validation.Valid;
 
@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import be.vdab.pizzaluigi.entities.Pizza;
 import be.vdab.pizzaluigi.services.EuroService;
 import be.vdab.pizzaluigi.services.PizzaService;
+import be.vdab.pizzaluigi.valueobjects.Dollar;
 // Een PizzaController die GET requests verwerkt naar de URL pizzas.html:
 @Controller
 @RequestMapping("pizzas")
@@ -35,7 +36,7 @@ class PizzaController {
 //			new Pizza(12, "Prosciutto", BigDecimal.valueOf(4), true),
 //			new Pizza(14, "Margherita", BigDecimal.valueOf(5), false),
 //			new Pizza(17, "Calzone", BigDecimal.valueOf(4), false));
-	private final Map<Long, Pizza> pizzas = new LinkedHashMap<>();	// keys:pizza ids
+//	private final Map<Long, Pizza> pizzas = new LinkedHashMap<>();	// keys:pizza ids
 	private final EuroService euroService;
 	private final PizzaService pizzaService;
 	/*
@@ -94,7 +95,8 @@ class PizzaController {
 //		modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
 		pizzaService.read(id).ifPresent(pizza -> {
 			modelAndView.addObject(pizza);
-			modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
+//			modelAndView.addObject("inDollar", euroService.naarDollar(pizza.getPrijs()));
+			modelAndView.addObject("inDollar", new Dollar(euroService.naarDollar(pizza.getPrijs())));
 		});
 		return modelAndView;
 	}
