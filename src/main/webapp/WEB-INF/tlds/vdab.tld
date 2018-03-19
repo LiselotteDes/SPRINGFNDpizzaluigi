@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<!-- Je definieert met tlib-version een versienummer van de tag library. -->
+	<tlib-version>1.0</tlib-version>
+	<!-- Je definieert met short-name de voorkeur prefix voor de tag library. -->
+	<short-name>vdab</short-name>
+	<!-- Je definieert met uri de URI van de tag library. -->
+	<uri>http://vdab.be/tags</uri>
+	<!-- Je definieert per tag die behoort tot de tag library een element tag-file. -->
+	<tag-file>
+		<!-- Je definieert met name de tag naam. -->
+		<name>menu</name>
+		<!-- Je definieert met path de plaats en de naam van het tag bestand. -->
+		<path>/WEB-INF/tags/vdab/menu.tag</path>
+	</tag-file>
+	<tag-file>
+		<name>head</name>
+		<path>/WEB-INF/tags/vdab/head.tag</path>
+	</tag-file>
+</taglib>

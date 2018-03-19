@@ -1,4 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" session="false"%>
+<%@taglib prefix="vdab" uri="http://vdab.be/tags" %>
 <%-- Associeert de prefix c met de URI van de core library die de tag forEach bevat. --%>
 <%@taglib prefix = 'c' uri='http://java.sun.com/jsp/jstl/core'%>
 <%-- Voegt een verwijzing toe naar de Spring tag library --%>
@@ -9,12 +10,14 @@
 	<!-- 	<title>Pizza's</title> -->
 	<!-- 	<meta name="viewport" content="widt=device-width,initial-scale=1"> -->
 	<!-- 	<link rel="stylesheet" href="css/pizzaluigi.css"> -->
-	<c:import url="/WEB-INF/JSP/head.jsp">
-		<c:param name="title" value="Pizza's"/>
-	</c:import>
+<%-- 	<c:import url="/WEB-INF/JSP/head.jsp"> --%>
+<%-- 		<c:param name="title" value="Pizza's"/> --%>
+<%-- 	</c:import> --%>
+	<vdab:head title="Pizza's"/>
 </head>
 <body>
-	<c:import url="/WEB-INF/JSP/menu.jsp"/>
+<%-- 	<c:import url="/WEB-INF/JSP/menu.jsp"/> --%>
+	<vdab:menu/>
 	<%-- De expressie param.boodschap verwijst naar de request parameter boodschap. --%>
 	<c:if test="${not empty param.boodschap}">
 		<div class="boodschap">${param.boodschap}</div>

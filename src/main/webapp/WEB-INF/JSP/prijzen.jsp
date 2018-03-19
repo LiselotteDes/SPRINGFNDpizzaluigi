@@ -1,16 +1,19 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" session="false"%>
+<%@ taglib prefix="vdab" uri="http://vdab.be/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-	<c:import url="/WEB-INF/JSP/head.jsp">
-		<c:param name="title" value="Prijzen"/>
-	</c:import>
+<%-- 	<c:import url="/WEB-INF/JSP/head.jsp"> --%>
+<%-- 		<c:param name="title" value="Prijzen"/> --%>
+<%-- 	</c:import> --%>
+	<vdab:head title="Prijzen"/>
 </head>
 <body>
-	<c:import url="/WEB-INF/JSP/menu.jsp"/>
+<%-- 	<c:import url="/WEB-INF/JSP/menu.jsp"/> --%>
+	<vdab:menu/>
 	<h1>Prijzen</h1>
 	<ul>
 	<c:forEach items="${prijzen}" var="prijs">
